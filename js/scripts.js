@@ -41,9 +41,25 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 	 }
 }
 
-//++++++establish bank object+++++++++++++
-
-var bank = {balance: 1000};
+//++++++establish funds object+++++++++++++
+//start funds at $1000
+var funds = {balance: 1000,
+							//reduce funds by amount of bet 
+							betReduce: function(bet) {
+								this.balance = this.balance - bet;
+								return this.balance
+							},
+							//return amount of bet in the case of a win
+							winBet: function(bet) {
+								this.balance = this.balance + bet;
+								return this.balance;
+							},
+							//return 1.5 times amount of bet if blackjack
+							winBlackjack: function(bet) {
+								this.balance = this.balance + (bet * 1.5);
+								return this.balance;
+							}
+							};
 
 //++++++shuffle deck++++++++++++++++++++++
 
@@ -68,6 +84,20 @@ function shuffle(array) {
   //return the shuffled array
   return array;
 }
+
+//++++++++set bet amount++++++++++++++++
+//define bet variable
+var bet = 30;
+
+//display bet variable on screen
+//insert bet in id betmessage
+$betMessage = $('#betmessage');
+$betMessage.append('Your bet: ' + bet);
+
+//reduce funds by bet
+
+
+
 
 
 
