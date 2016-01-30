@@ -1,12 +1,28 @@
 console.log("Hello, mom");
 
-//establish beginning deck array
-
+//establish beginning game conditions
+//deck array
 var deck = [];
 
-//build constructor to render beginning deck array
+//Dealer's hand
+var dealerHand = [];
 
-//++++++establish constructor+++++++++++
+//Player's hand
+var playerHand = [];
+
+//display initial funds
+$('#bank').text("Funds: $1000");
+
+//define bet variable
+var bet = 0;
+
+//display bet variable on screen
+//insert bet in id betmessage
+$betMessage = $('#betmessage');
+$betMessage.append('Your bet: $' + bet);
+
+
+//++++++Construct beginning deck array++++++++++++++++
 
 //set array of set of values
 var valueArray = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
@@ -47,6 +63,7 @@ var funds = {balance: 1000,
 							//reduce funds by amount of bet 
 							betReduce: function(bet) {
 								this.balance = this.balance - bet;
+								$('#bank').text("Funds: " + this.balance);
 								return this.balance
 							},
 							//return amount of bet in the case of a win
@@ -85,16 +102,98 @@ function shuffle(array) {
   return array;
 }
 
-//++++++++set bet amount++++++++++++++++
-//define bet variable
-var bet = 30;
+//++++++++set click listeners++++++++++++
 
-//display bet variable on screen
-//insert bet in id betmessage
-$betMessage = $('#betmessage');
-$betMessage.append('Your bet: ' + bet);
+//bet round function
 
-//reduce funds by bet
+var betRound = function () {
+	
+	//set onclick for id "one"
+	$('#one').click(function () {
+		//increase bet by one
+		bet++;
+		funds.betReduce(1);
+		//display bet
+		$betMessage.text('Your bet: $' + bet);
+	});
+
+	//set onclick for id "five"
+	$('#five').click(function () {
+		//increase bet by five
+		bet += 5;
+		funds.betReduce(5);
+		//display bet
+		$betMessage.text('Your bet: ' + bet);
+	});
+
+	//set onclick for id "twentyfive"
+	$('#twentyfive').click(function () {
+		//increase bet by 25
+		bet += 25;
+		funds.betReduce(25);
+		//display bet
+		$betMessage.text('Your bet: ' + bet);
+	});
+
+	//set onclick for id "onehundred"
+	$('#onehundred').click(function () {
+		//increase bet by 100
+		bet += 100;
+		funds.betReduce(100);
+		//display bet
+		$betMessage.text('Your bet: ' + bet);
+	});
+
+	$('#fivehundred').click(function () {
+		//increase bet by 500
+		bet += 500;
+		funds.betReduce(500);
+			//display bet
+			$betMessage.text('Your bet: ' + bet);
+	});
+}
+
+//set onclick for deal
+$('#deal').click(function () {
+	console.log("Deal!");
+	//shuffle
+	//deal
+})
+
+//set onclick for hit
+$('#hit').click(function () {
+	console.log("Hit!");
+})
+//set onclick for stand
+$('#stand').click(function () {
+	console.log("Stand!");
+})
+
+//+++++++++++++end of onclicks++++++++++++++++
+// make function to deal first turn
+var deal = function () {
+
+	// Pop a card off the deck
+	
+
+	// Put in in the dealer's hand. Twice
+	for (var i = 0; i < 2; i++) {
+		var currentCard = deck.pop();
+		dealerHand.push(currentCard);	
+	}
+	//evaluate hand
+	var dealerHandValue = dealerHand[0].value + dealerHand[1].value;
+	//
+
+	// Put it in the player's had. Twice
+	for (var i = 0; i < 2; i++) {
+			var currentCard = deck.pop();
+			playerHand.push(currentCard);	
+	}
+	//evaluate hand
+	var playerHandValue = playerHand[0].value + playerHand[1].value;
+	console.log("playerHandValue = " + playerHandValue);
+}
 
 
 
