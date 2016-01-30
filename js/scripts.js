@@ -156,44 +156,116 @@ var betRound = function () {
 //set onclick for deal
 $('#deal').click(function () {
 	console.log("Deal!");
-	//shuffle
-	//deal
+	deal();
 })
 
 //set onclick for hit
 $('#hit').click(function () {
-	console.log("Hit!");
+	hit();
 })
 //set onclick for stand
 $('#stand').click(function () {
-	console.log("Stand!");
+	stand();
 })
 
 //+++++++++++++end of onclicks++++++++++++++++
+
 // make function to deal first turn
 var deal = function () {
 
-	// Pop a card off the deck
-	
-
-	// Put in in the dealer's hand. Twice
+	// Pop a card off the deck. Put in in the dealer's hand. Twice
 	for (var i = 0; i < 2; i++) {
 		var currentCard = deck.pop();
 		dealerHand.push(currentCard);	
 	}
+
 	//evaluate hand
 	var dealerHandValue = dealerHand[0].value + dealerHand[1].value;
-	//
+	
+	//show dealer's first card
+	console.log("Dealer shows " + dealerHand[0].value)
+
+	//if dealer hand equals 21, call blackjack function
+	if (dealerHandValue === 21) {
+		console.log("Dealer Blackjack!");
+	} else {
+		//if dealer hand value exceeds 21, call bust function
+		if (dealerHandValue > 21) {
+			console.log("Dealer Bust!");
+		} 
+	}
 
 	// Put it in the player's had. Twice
 	for (var i = 0; i < 2; i++) {
 			var currentCard = deck.pop();
 			playerHand.push(currentCard);	
 	}
+
 	//evaluate hand
 	var playerHandValue = playerHand[0].value + playerHand[1].value;
-	console.log("playerHandValue = " + playerHandValue);
+	
+	//show player hand value
+	console.log("Player has " + playerHandValue);
+
+	//if player hand equals 21, call blackjack function
+	if (playerHandValue === 21) {
+		console.log("Player Blackjack!");
+	} else {
+		//if player hand value exceeds 21, call bust function
+		if (playerHandValue > 21) {
+			console.log("Player Bust!");
+		} 
+	}
 }
+
+//+++++++++++Hit button function++++++++++++++
+
+var hit = function () {
+	//Pop a card off the deck, 
+	var currentCard = deck.pop();
+	//Put it in the player's hand
+	playerHand.push(currentCard);
+	//Sum up the value of the player's hand
+	var playerHandValue = 0;
+	for (var i = 0; i < playerHand.length; i++ ) {
+		playerHandValue += playerHand[i].value;
+	}
+	console.log("Player has " + playerHandValue);
+
+	//Test for 21
+	if (playerHandValue === 21) {
+		console.log("Player hits 21!")
+		// function stand
+	}
+
+	//Test for bust
+	if (playerHandValue > 21) {
+		console.log("Player busts!");
+		//function lose
+	}
+}
+
+//++++++++++++++++Stand button function+++++++++++++++
+
+var stand = function () {
+
+	//loop over dealers hand values
+	var dealerHandValue = 0;
+	for (var i = 0; i < dealerHand.length; i++) {
+		dealerHandValue += dealerHand[i].value;
+	}
+
+	//Report dealer hand value
+	console.log("Dealer has: " + dealerHandValue);
+
+	//Dealer pops one card off deck
+	var currentCard = deck.pop();
+	//Dealer adds card to hand
+	dealerHand.push(currentCard)
+
+
+}
+
 
 
 
