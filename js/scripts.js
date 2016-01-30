@@ -1,7 +1,9 @@
 console.log("Hello, mom");
 
-//establish beginning game conditions
-//deck array
+//+++++++++++++++++++++++++++++++++++++++++
+//   establish beginning game conditions
+//+++++++++++++++++++++++++++++++++++++++++
+
 var deck = [];
 
 //Dealer's hand
@@ -9,6 +11,9 @@ var dealerHand = [];
 
 //Player's hand
 var playerHand = [];
+
+//declare and set dealer hand value
+var dealerHandValue = 0;
 
 //display initial funds
 $('#bank').text("Funds: $1000");
@@ -22,7 +27,9 @@ $betMessage = $('#betmessage');
 $betMessage.append('Your bet: $' + bet);
 
 
-//++++++Construct beginning deck array++++++++++++++++
+//++++++++++++++++++++++++++++++++++++
+//   Construct beginning deck array
+//++++++++++++++++++++++++++++++++++++
 
 //set array of set of values
 var valueArray = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
@@ -57,28 +64,49 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 	 }
 }
 
-//++++++establish funds object+++++++++++++
+//++++++++++++++++++++++++++++
+//   establish funds object
+//++++++++++++++++++++++++++++
+
 //start funds at $1000
 var funds = {balance: 1000,
 							//reduce funds by amount of bet 
 							betReduce: function(bet) {
 								this.balance = this.balance - bet;
 								$('#bank').text("Funds: " + this.balance);
-								return this.balance
 							},
 							//return amount of bet in the case of a win
 							winBet: function(bet) {
+								console.log("Player wins!")
 								this.balance = this.balance + bet;
-								return this.balance;
+								//report the new balance
+								$('#bank').text("Funds: " + this.balance);
+								bet = 0;
+								//report the new bet
+								$betMessage.text('Your bet: ' + bet)
 							},
 							//return 1.5 times amount of bet if blackjack
 							winBlackjack: function(bet) {
-								this.balance = this.balance + (bet * 1.5);
-								return this.balance;
+								console.log("Player gets a blackjack!!")
+								this.balance = this.balance + (1.5 * bet);
+								//report the new balance
+								$('#bank').text("Funds: " + this.balance);
+								bet = 0;
+								//report the new bet
+								$betMessage.text('Your bet: ' + bet)
+							},
+							loseBet: function(bet) {
+								console.log("Player loses");
+								//bet is gone 		
+								bet = 0;
+								//report the new bet
+								$betMessage.text('Your bet: ' + bet)
 							}
 							};
 
-//++++++shuffle deck++++++++++++++++++++++
+//+++++++++++++++++++++++++++
+//   shuffle deck function
+//+++++++++++++++++++++++++++
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -102,56 +130,55 @@ function shuffle(array) {
   return array;
 }
 
-//++++++++set click listeners++++++++++++
+//+++++++++++++++++++++++++
+//   set bet phase
+//+++++++++++++++++++++++++
 
-//bet round function
 
-var betRound = function () {
-	
-	//set onclick for id "one"
-	$('#one').click(function () {
-		//increase bet by one
-		bet++;
-		funds.betReduce(1);
-		//display bet
-		$betMessage.text('Your bet: $' + bet);
-	});
+//set onclick for id "one"
+$('#one').click(function () {
+	//increase bet by one
+	bet++;
+	funds.betReduce(1);
+	//display bet
+	$betMessage.text('Your bet: $' + bet);
+});
 
-	//set onclick for id "five"
-	$('#five').click(function () {
-		//increase bet by five
-		bet += 5;
-		funds.betReduce(5);
+//set onclick for id "five"
+$('#five').click(function () {
+	//increase bet by five
+	bet += 5;
+	funds.betReduce(5);
+	//display bet
+	$betMessage.text('Your bet: ' + bet);
+});
+
+//set onclick for id "twentyfive"
+$('#twentyfive').click(function () {
+	//increase bet by 25
+	bet += 25;
+	funds.betReduce(25);
+	//display bet
+	$betMessage.text('Your bet: ' + bet);
+});
+
+//set onclick for id "onehundred"
+$('#onehundred').click(function () {
+	//increase bet by 100
+	bet += 100;
+	funds.betReduce(100);
+	//display bet
+	$betMessage.text('Your bet: ' + bet);
+});
+
+$('#fivehundred').click(function () {
+	//increase bet by 500
+	bet += 500;
+	funds.betReduce(500);
 		//display bet
 		$betMessage.text('Your bet: ' + bet);
-	});
+});
 
-	//set onclick for id "twentyfive"
-	$('#twentyfive').click(function () {
-		//increase bet by 25
-		bet += 25;
-		funds.betReduce(25);
-		//display bet
-		$betMessage.text('Your bet: ' + bet);
-	});
-
-	//set onclick for id "onehundred"
-	$('#onehundred').click(function () {
-		//increase bet by 100
-		bet += 100;
-		funds.betReduce(100);
-		//display bet
-		$betMessage.text('Your bet: ' + bet);
-	});
-
-	$('#fivehundred').click(function () {
-		//increase bet by 500
-		bet += 500;
-		funds.betReduce(500);
-			//display bet
-			$betMessage.text('Your bet: ' + bet);
-	});
-}
 
 //set onclick for deal
 $('#deal').click(function () {
@@ -163,14 +190,24 @@ $('#deal').click(function () {
 $('#hit').click(function () {
 	hit();
 })
-//set onclick for stand
-$('#stand').click(function () {
-	stand();
-})
 
-//+++++++++++++end of onclicks++++++++++++++++
+// //set onclick for stand
+// $('#stand').click(function () {
+// 	stand(playerHandValue);
+// })
 
-// make function to deal first turn
+
+
+//++++++++++++++++++
+//   Shuffle Deck and call bet phase
+//++++++++++++++++++
+
+shuffle(deck);
+
+//+++++++++++++++++++
+//   deal function
+//+++++++++++++++++++
+
 var deal = function () {
 
 	// Pop a card off the deck. Put in in the dealer's hand. Twice
@@ -188,14 +225,16 @@ var deal = function () {
 	//if dealer hand equals 21, call blackjack function
 	if (dealerHandValue === 21) {
 		console.log("Dealer Blackjack!");
+		dealerWins();
 	} else {
 		//if dealer hand value exceeds 21, call bust function
 		if (dealerHandValue > 21) {
 			console.log("Dealer Bust!");
+			playerWins();
 		} 
 	}
 
-	// Put it in the player's had. Twice
+	// Put it in the player's hand. Twice
 	for (var i = 0; i < 2; i++) {
 			var currentCard = deck.pop();
 			playerHand.push(currentCard);	
@@ -210,15 +249,24 @@ var deal = function () {
 	//if player hand equals 21, call blackjack function
 	if (playerHandValue === 21) {
 		console.log("Player Blackjack!");
+		playerWinsBlackjack();
 	} else {
 		//if player hand value exceeds 21, call bust function
 		if (playerHandValue > 21) {
 			console.log("Player Bust!");
+			dealerWins();
 		} 
 	}
+
+	//set onclick for stand and pass player hand value as argument
+	$('#stand').click(function () {
+		stand(playerHandValue);
+	})
 }
 
-//+++++++++++Hit button function++++++++++++++
+//++++++++++++++++++
+//   Hit function
+//++++++++++++++++++
 
 var hit = function () {
 	//Pop a card off the deck, 
@@ -234,43 +282,116 @@ var hit = function () {
 
 	//Test for 21
 	if (playerHandValue === 21) {
-		console.log("Player hits 21!")
-		// function stand
+		console.log("Player hits 21!");
+		stand(21);
 	}
 
 	//Test for bust
 	if (playerHandValue > 21) {
 		console.log("Player busts!");
-		//function lose
+		dealerWins();
 	}
+	//set onclick for stand and pass player hand value as argument
+	$('#stand').click(function () {
+		stand(playerHandValue);
+})
 }
 
-//++++++++++++++++Stand button function+++++++++++++++
+//+++++++++++++++++++
+//   Stand function
+//+++++++++++++++++++
 
-var stand = function () {
+var stand = function (playerHandValue) {
 
 	//loop over dealers hand values
-	var dealerHandValue = 0;
 	for (var i = 0; i < dealerHand.length; i++) {
+		//add to dealer hand value
 		dealerHandValue += dealerHand[i].value;
 	}
 
 	//Report dealer hand value
 	console.log("Dealer has: " + dealerHandValue);
 
-	//Dealer pops one card off deck
-	var currentCard = deck.pop();
-	//Dealer adds card to hand
-	dealerHand.push(currentCard)
+	//if less than 17, hit and repeat until 17 or more
+	while (dealerHandValue < 17) {
+		console.log("Dealer takes card");
+		//pop a card off the stack
+		var currentCard = deck.pop();
+		//Put it in the player's hand
+		dealerHand.push(currentCard);
+		dealerHandValue += currentCard.value
+		console.log("Dealer has " + dealerHandValue)
+	}
 
+	if (dealerHandValue > 21) {
+		console.log("Dealer busts");
+		playerWins();
+	} else {
+		console.log("Dealer stands")
+		//check to see who wins
+		checkWhoWins(playerHandValue, dealerHandValue);
+	}
+}
+//+++++++++++++++++++++++++++++
+//   Check who wins function
+//+++++++++++++++++++++++++++++
 
+var checkWhoWins = function (playerHandValue, dealerHandValue) {
+	if (playerHandValue > dealerHandValue) {
+		playerWins();
+	} else {
+		if (dealerHandValue > playerHandValue) {
+			dealerWins();
+		} else {
+			push();
+		}
+	}
 }
 
+//++++++++++++++++++++++++++
+//   Player wins function
+//++++++++++++++++++++++++++
 
+var playerWins = function () {
+	funds.winBet(bet);
+}
 
+//++++++++++++++++++++++++++
+//   Dealer wins function
+//++++++++++++++++++++++++++
 
+var dealerWins = function() {
+	funds.loseBet(bet);
+}
 
+//+++++++++++++++++++++++
+//   Push function
+//+++++++++++++++++++++++
 
+var push = function () {
+	console.log("push");
+}
 
+// //+++++++++++++++++++++++++
+// //   Play Again function
+// //+++++++++++++++++++++++++
+
+// var playAgain = function () {
+// 	var yesOrNo = prompt("Would you like to quit?")
+// 	if (yesOrNo = "yes") {
+// 		//play game function
+// 		console.log("Thanks for Playing!");
+// 	} else {
+// 		betPhase();
+// 	}
+// }
+
+//++++++++++++++++++++++++++++++++++++
+//   Player Wins Blackjack function
+//++++++++++++++++++++++++++++++++++++
+
+var playerWinsBlackjack = function () {
+	funds.winBlackjack();
+}
 
 
