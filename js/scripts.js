@@ -66,10 +66,11 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 //   Add unicodes
 //++++++++++++++++++
 
-var unicodes = ["1F0A1"];
-var $dealerHandRack = $('#dealerhandrack')
-// $dealerHandRack.text('&#x1F0A1');
-$('#dealerhandrack').text(String.fromCharCode(1F0C6));
+//unsuccessful attempt using jQuery to deliver unicodes
+// var unicodes = ["1F0A1"];
+// var $dealerHandRack = $('#dealerhandrack')
+// // $dealerHandRack.text('&#x1F0A1');
+// $('#dealerhandrack').text(String.fromCharCode(1F0C6));
 
 
 //++++++++++++++++++++++++++++
@@ -414,5 +415,18 @@ var push = function () {
 var playerWinsBlackjack = function () {
 	funds.winBlackjack();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
