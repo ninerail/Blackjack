@@ -1,5 +1,3 @@
-console.log("Hello, mom");
-
 //+++++++++++++++++++++++++++++++++++++++++
 //   establish beginning game conditions
 //+++++++++++++++++++++++++++++++++++++++++
@@ -64,6 +62,16 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 	 }
 }
 
+//++++++++++++++++++
+//   Add unicodes
+//++++++++++++++++++
+
+var unicodes = ["1F0A1"];
+var $dealerHandRack = $('#dealerhandrack')
+// $dealerHandRack.text('&#x1F0A1');
+$('#dealerhandrack').text(String.fromCharCode(1F0C6));
+
+
 //++++++++++++++++++++++++++++
 //   establish funds object
 //++++++++++++++++++++++++++++
@@ -71,14 +79,14 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 //start funds at $1000
 var funds = {balance: 1000,
 							//reduce funds by amount of bet 
-							betReduce: function(bet) {
+							betReduce: function() {
 								this.balance = this.balance - bet;
 								$('#bank').text("Funds: " + this.balance);
 							},
 							//return amount of bet in the case of a win
-							winBet: function(bet) {
+							winBet: function() {
 								console.log("Player wins!")
-								this.balance = this.balance + bet;
+								this.balance = this.balance + (2 * bet);
 								//report the new balance
 								$('#bank').text("Funds: " + this.balance);
 								bet = 0;
@@ -86,21 +94,25 @@ var funds = {balance: 1000,
 								$betMessage.text('Your bet: ' + bet)
 							},
 							//return 1.5 times amount of bet if blackjack
-							winBlackjack: function(bet) {
+							winBlackjack: function() {
 								console.log("Player gets a blackjack!!")
-								this.balance = this.balance + (1.5 * bet);
+								this.balance = this.balance + (2.5 * bet);
 								//report the new balance
 								$('#bank').text("Funds: " + this.balance);
 								bet = 0;
 								//report the new bet
 								$betMessage.text('Your bet: ' + bet)
 							},
-							loseBet: function(bet) {
+							loseBet: function() {
 								console.log("Player loses");
 								//bet is gone 		
 								bet = 0;
 								//report the new bet
 								$betMessage.text('Your bet: ' + bet)
+							},
+							push: function() {
+								console.log("It's a push!")
+								this.balance = this.balance + bet
 							}
 							};
 
@@ -210,6 +222,10 @@ shuffle(deck);
 
 var deal = function () {
 
+	//clear hands
+	dealerHand = [];
+	playerHand = [];
+
 	// Pop a card off the deck. Put in in the dealer's hand. Twice
 	for (var i = 0; i < 2; i++) {
 		var currentCard = deck.pop();
@@ -304,6 +320,7 @@ var hit = function () {
 var stand = function (playerHandValue) {
 
 	//loop over dealers hand values
+	//this gets called twice
 	for (var i = 0; i < dealerHand.length; i++) {
 		//add to dealer hand value
 		dealerHandValue += dealerHand[i].value;
@@ -325,9 +342,11 @@ var stand = function (playerHandValue) {
 
 	if (dealerHandValue > 21) {
 		console.log("Dealer busts");
+		//do I need this?
+		dealerHandValue = 0;
 		playerWins();
 	} else {
-		console.log("Dealer stands")
+		console.log("Dealer stands");
 		//check to see who wins
 		checkWhoWins(playerHandValue, dealerHandValue);
 	}
@@ -337,7 +356,9 @@ var stand = function (playerHandValue) {
 //+++++++++++++++++++++++++++++
 
 var checkWhoWins = function (playerHandValue, dealerHandValue) {
+	console.log("check who wins");
 	if (playerHandValue > dealerHandValue) {
+		console.log("player wins function next");
 		playerWins();
 	} else {
 		if (dealerHandValue > playerHandValue) {
@@ -369,7 +390,7 @@ var dealerWins = function() {
 //+++++++++++++++++++++++
 
 var push = function () {
-	console.log("push");
+	funds.push(bet);
 }
 
 // //+++++++++++++++++++++++++
