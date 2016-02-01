@@ -24,48 +24,49 @@ var bet = 0;
 $betMessage = $('#betmessage');
 $betMessage.append('Your bet: $' + bet);
 
-//Test variable
-var blowhole = 15;
-
 //declare tag appended
 var $tagAppended
+
+
 //++++++++++++++++++++++++++++++++++++
 //   Construct beginning deck array
 //++++++++++++++++++++++++++++++++++++
 
-//set array of set of values
-var valueArray = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+var buildDeck = function () {
+	//set array of set of values
+	var valueArray = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
-//set array of set of suits
-var suitsArray = ["spades","hearts","diamonds","clubs"];
+	//set array of set of suits
+	var suitsArray = ["spades","hearts","diamonds","clubs"];
 
-//set array of set of face
-var faceArray = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
+	//set array of set of face
+	var faceArray = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
 
-//build loop for suit
-for (var suit = 0; suit < suitsArray.length; suit++) {
+	//build loop for suit
+	for (var suit = 0; suit < suitsArray.length; suit++) {
 
-	//build loop for face and value
-	for (var face = 0; face < faceArray.length; face++) {
-		
-		//constructor
-			function Card() {
+		//build loop for face and value
+		for (var face = 0; face < faceArray.length; face++) {
+			
+			//constructor
+				function Card() {
 
-				//set value
-			  this.value = valueArray[face];
+					//set value
+				  this.value = valueArray[face];
 
-			  //set suit
-			  this.suit = suitsArray[suit];
-			  //set face
-			  this.face = faceArray[face];
-			  //set id
-			  this.id = suitsArray[suit] + faceArray[face];
-			}
-		  //assign object to variable
-		  var card = new Card;
-		  //add variable on to deck array
-		  deck.push(card); 
-	 }
+				  //set suit
+				  this.suit = suitsArray[suit];
+				  //set face
+				  this.face = faceArray[face];
+				  //set id
+				  this.id = suitsArray[suit] + faceArray[face];
+				}
+			  //assign object to variable
+			  var card = new Card;
+			  //add variable on to deck array
+			  deck.push(card); 
+		 }
+	}
 }
 
 //++++++++++++++++++
@@ -87,39 +88,85 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 var funds = {balance: 1000,
 							//reduce funds by amount of bet 
 							betReduce: function() {
+
+								//reduce balance by bet amount
 								this.balance = this.balance - bet;
+
+								//display funds balance
 								$('#bank').text("Funds: " + this.balance);
 							},
 							//return amount of bet in the case of a win
 							winBet: function() {
+
+								//announce result
 								console.log("Player wins!")
+								$('#gamemessage').text("player wins!");
+
+
+								//add twice the bet to the balance
 								this.balance = this.balance + (2 * bet);
-								//report the new balance
+
+								//display the new balance
 								$('#bank').text("Funds: " + this.balance);
+
+								//zero out the bet
 								bet = 0;
+
 								//report the new bet
 								$betMessage.text('Your bet: ' + bet)
 							},
 							//return 1.5 times amount of bet if blackjack
 							winBlackjack: function() {
+
+								//announce result
 								console.log("Player gets a blackjack!!")
+								$('#gamemessage').text("player gets a blackjack!!");
+
+
+								//pay 2.5 times the bet to balance
 								this.balance = this.balance + (2.5 * bet);
+
 								//report the new balance
 								$('#bank').text("Funds: " + this.balance);
+								
+								//zero out the bet
 								bet = 0;
+
 								//report the new bet
-								$betMessage.text('Your bet: ' + bet)
+								$betMessage.text('Your bet: ' + bet);
+
 							},
 							loseBet: function() {
+
+								//annonce result
 								console.log("Player loses");
-								//bet is gone 		
+								$('#gamemessage').text("player loses");
+
+
+								//zero out the bet 		
 								bet = 0;
+
 								//report the new bet
 								$betMessage.text('Your bet: ' + bet)
 							},
 							push: function() {
+
+								//announce result
 								console.log("It's a push!")
-								this.balance = this.balance + bet
+								$('#gamemessage').text("player wins!");
+
+
+								//add bet back to balance
+								this.balance = this.balance + bet;
+
+								//zero out the bet
+								bet = 0;
+
+								//display bet message
+								$betMessage.text('Your bet: ' + bet);
+
+								//display funds balance
+								$('#bank').text("Funds: " + this.balance);
 							}
 							};
 
@@ -163,6 +210,9 @@ $('#one').click(function () {
 	$betMessage.text('Your bet: $' + bet);
 });
 
+//pointer on hover
+$('#one').css( 'cursor', 'pointer' )
+
 //set onclick for id "five"
 $('#five').click(function () {
 	//increase bet by five
@@ -171,6 +221,9 @@ $('#five').click(function () {
 	//display bet
 	$betMessage.text('Your bet: ' + bet);
 });
+
+//pointer on hover
+$('#five').css( 'cursor', 'pointer' );
 
 //set onclick for id "twentyfive"
 $('#twentyfive').click(function () {
@@ -181,6 +234,9 @@ $('#twentyfive').click(function () {
 	$betMessage.text('Your bet: ' + bet);
 });
 
+//pointer on hover
+$('#twentyfive').css( 'cursor', 'pointer' );
+
 //set onclick for id "onehundred"
 $('#onehundred').click(function () {
 	//increase bet by 100
@@ -190,6 +246,9 @@ $('#onehundred').click(function () {
 	$betMessage.text('Your bet: ' + bet);
 });
 
+//pointer on hover
+$('#onehundred').css( 'cursor', 'pointer' );
+
 $('#fivehundred').click(function () {
 	//increase bet by 500
 	bet += 500;
@@ -198,6 +257,9 @@ $('#fivehundred').click(function () {
 		$betMessage.text('Your bet: ' + bet);
 });
 
+//pointer on hover
+$('#fivehundred').css( 'cursor', 'pointer' );
+
 
 //set onclick for deal
 $('#deal').click(function () {
@@ -205,10 +267,16 @@ $('#deal').click(function () {
 	deal();
 })
 
+//pointer on hover
+$('#deal').css( 'cursor', 'pointer' );
+
 //set onclick for hit
 $('#hit').click(function () {
 	hit();
 })
+
+//pointer on hover
+$('#hit').css( 'cursor', 'pointer' );
 
 // //set onclick for stand
 // $('#stand').click(function () {
@@ -220,7 +288,7 @@ $('#hit').click(function () {
 //++++++++++++++++++
 //   Shuffle Deck 
 //++++++++++++++++++
-
+buildDeck();
 shuffle(deck);
 
 //+++++++++++++++++++
@@ -233,25 +301,51 @@ var deal = function () {
 	dealerHand = [];
 	playerHand = [];
 
+	//clear display
+	$('#dealerhand').empty();
+	$('#playerhand').empty(); 
+
+	//clear messages
+	$('#dealerhandmessage').empty();
+	$('#playerhandmessage').empty();
+
+
+	//if there are less than 10 cards remaining, shuffle deck
+	if (deck.length < 10) {
+		//announce shuffling
+		console.log("SHUFFLING!")
+		//build a new deck
+		buildDeck();
+		//shuffle
+		shuffle(deck);
+	}
+
 	// Pop a card off the deck. Put in in the dealer's hand. Twice
 	for (var i = 0; i < 2; i++) {
 		var currentCard = deck.pop();
 		dealerHand.push(currentCard);	
 	}
 
-	//display first card face up
-	//Get the id of the first card in the dealer's hand
-	//put <i> tags in dealerhand
-	$('#dealerhand').html('<i></i>');
+	renderDealerHand();
 
-	//give id = dealerHand[0].id to <i> tags
-	$('#dealerhand i:first-child').attr("id", dealerHand[0].id);
+	//grab the second child of dealer hand and set it to back
+	$('#dealerhand i:nth-child(2)').attr("id","back");
 
-	//display dealer's second card face down
-	$('#dealerhand').append('<i id="back"></i>');
+	// //display first card face up
+	// //Get the id of the first card in the dealer's hand
+	// //put <i> tags in dealerhand
+	// $('#dealerhand').html('<i></i>');
+
+	// //give id = dealerHand[0].id to <i> tags
+	// $('#dealerhand i:first-child').attr("id", dealerHand[0].id);
+
+	// //display dealer's second card face down
+	// $('#dealerhand').append('<i id="back"></i>');
 
 	//evaluate hand
-	var dealerHandValue = dealerHand[0].value + dealerHand[1].value;
+	var dealerHandValue = calcDealerHandValue();
+		// $('#dealerhandmessage').text("dealer shows " + dealerHand[0].value);
+
 	
 	//show dealer's first card
 	console.log("Dealer shows " + dealerHand[0].value)
@@ -275,19 +369,22 @@ var deal = function () {
 			playerHand.push(currentCard);	
 	}
 
-	//display player's first card
-	$('#playerhand').append('<i></i>');
-	$('#playerhand i:first-child').attr("id", playerHand[0].id);
+	//render player hand
+	renderPlayerHand();
 
-	//display player's second card
-	$('#playerhand').append('<i></i>');
-  $('#playerhand i:nth-child(2)').attr("id", playerHand[1].id);
+	// //display player's first card
+	// $('#playerhand').append('<i></i>');
+	// $('#playerhand i:first-child').attr("id", playerHand[0].id);
+
+	// //display player's second card
+	// $('#playerhand').append('<i></i>');
+ //  $('#playerhand i:nth-child(2)').attr("id", playerHand[1].id);
 
 	//evaluate hand
-	var playerHandValue = playerHand[0].value + playerHand[1].value;
+	var playerHandValue = calcPlayerHandValue();
 	
-	//show player hand value
-	console.log("Player has " + playerHandValue);
+	//display player hand value
+	$('#playerhandmessage').text("player has " + playerHandValue);
 
 	//if player hand equals 21, call blackjack function
 	if (playerHandValue === 21) {
@@ -316,37 +413,45 @@ var hit = function () {
 	var currentCard = deck.pop();
 	//Put it in the player's hand
 	playerHand.push(currentCard);
-	//Sum up the value of the player's hand
-	var playerHandValue = 0;
-	for (var i = 0; i < playerHand.length; i++ ) {
-		playerHandValue += playerHand[i].value;
-	}
+
+	//Add up PHV 
+	var playerHandValue = calcPlayerHandValue();
+
+	//display and report PHV
+	$('#playerhandmessage').text("player has " + playerHandValue);
+
 	console.log("Player has " + playerHandValue);
 
-
-	
+	//render player's hand
+	renderPlayerHand();
 
 	//display additional card
-	$tagAppended = $('<i></i>');
-	$tagAppended.attr("id", playerHand[playerHand.length - 1].id);
-	$('#playerhand').append($tagAppended);
+	// $tagAppended = $('<i></i>');
+	// $tagAppended.attr("id", playerHand[playerHand.length - 1].id);
+	// $('#playerhand').append($tagAppended);
   //$('#playerhand i:nth-child(3)').attr("id", playerHand[2].id);
 
 	//Test for 21
 	if (playerHandValue === 21) {
 		console.log("Player hits 21!");
+		$('#playerhandmessage').text("player has 21!");
 		stand(21);
 	}
 
 	//Test for bust
 	if (playerHandValue > 21) {
 		console.log("Player busts!");
+		$('#playerhandmessage').text("player busts");
 		dealerWins();
 	}
 	//set onclick for stand and pass player hand value as argument
 	$('#stand').click(function () {
 		stand(playerHandValue);
-})
+	})
+
+	//pointer on hover
+$('#stand').css( 'cursor', 'pointer' );
+
 }
 
 //+++++++++++++++++++
@@ -355,23 +460,37 @@ var hit = function () {
 
 var stand = function (playerHandValue) {
 
-	//loop over dealers hand values
-	//this gets called twice
-	for (var i = 0; i < dealerHand.length; i++) {
-		//add to dealer hand value
-		dealerHandValue += dealerHand[i].value;
-	}
+	//count up dealer hand value
+	var dealerHandValue = calcDealerHandValue();
+
+	// //loop over dealers hand values
+	// //this gets called twice
+
+
+	// for (var i = 0; i < dealerHand.length; i++) {
+	// 	//add to dealer hand value
+	// 	dealerHandValue += dealerHand[i].value;
+	// }
 
 	//get rid of back
-	$('#dealerhand i:nth-child(2)').remove();
+	//$('#dealerhand i:nth-child(2)').detach();
 
 	//show face down card
-	$tagAppended = $('<i></i>');
-	$tagAppended.attr("id", dealerHand[dealerHand.length - 1].id);
-	$('#dealerhand').append($tagAppended);
+	// $tagAppended = $('<i></i>');
+	// $tagAppended.attr("id", dealerHand[dealerHand.length - 1].id);
+	// $('#dealerhand').append($tagAppended);
+
+	//render dealer hand
+	renderDealerHand();
 
 	//Report dealer hand value
+	$('#dealerhandmessage').text("dealer has " + dealerHandValue);
 	console.log("Dealer has: " + dealerHandValue);
+
+	//If the total is 17, reduce by number of aces
+	if (dealerHandValue === 17) {
+		dealerHandValue = aceReduce(dealerHandValue);
+	}
 
 	//if less than 17, hit and repeat until 17 or more
 	while (dealerHandValue < 17) {
@@ -383,37 +502,47 @@ var stand = function (playerHandValue) {
 		dealerHand.push(currentCard);
 
 		//display the new card
-		$tagAppended = $('<i></i>');
-		$tagAppended.attr("id", dealerHand[dealerHand.length - 1].id);
-		$('#dealerhand').append($tagAppended);
+		renderDealerHand();
 
-		//add onto dealer hand value
-		dealerHandValue += currentCard.value
+		//calculate new DHV
+		dealerHandValue = calcDealerHandValue();
+
+		if (dealerHandValue === 17) {
+			dealerHandValue = aceReduce(dealerHandValue);
+		}
 
 		//report new dealer hand value
 		console.log("Dealer has " + dealerHandValue)
+		$('#dealerhandmessage').text("dealer has " + dealerHandValue);
 
 	}
 
+	//if the total is 17, reduce aces one by one
+
 	if (dealerHandValue > 21) {
-		console.log("Dealer busts");
-		//do I need this?
-		dealerHandValue = 0;
-		playerWins();
-	} else {
-		console.log("Dealer stands");
+			console.log("Dealer busts");
+			$('#dealerhandmessage').text("dealer busts");
+
+			//do I need this?
+			// dealerHandValue = 0;
+			playerWins();
+		} else {
+
 		//check to see who wins
-		checkWhoWins(playerHandValue, dealerHandValue);
+		checkWhoWins();
 	}
 }
 //+++++++++++++++++++++++++++++
 //   Check who wins function
 //+++++++++++++++++++++++++++++
 
-var checkWhoWins = function (playerHandValue, dealerHandValue) {
-	console.log("check who wins");
+var checkWhoWins = function (){
+
+	//add up player hand value
+	var playerHandValue = calcPlayerHandValue();
+	//add up dealer hand value
+	var dealerHandValue = calcDealerHandValue();
 	if (playerHandValue > dealerHandValue) {
-		console.log("player wins function next");
 		playerWins();
 	} else {
 		if (dealerHandValue > playerHandValue) {
@@ -470,13 +599,111 @@ var playerWinsBlackjack = function () {
 	funds.winBlackjack();
 }
 
+//++++++++++++++++++++++++
+//   render player hand
+//++++++++++++++++++++++++
 
+//I know these can be abstracted into a single function
 
+var renderPlayerHand = function() {
+	//clear existing
+	$('#playerhand').empty()	
+	//loop over hand
+	for (var i = 0; i < playerHand.length; i++) {
+		$tagAppended = $('<i></i>');
+		$tagAppended.attr("id", playerHand[i].id);
+		$('#playerhand').append($tagAppended);
+	}
+}
 
+//++++++++++++++++++++++++
+//   render dealer hand
+//++++++++++++++++++++++++
 
+//I know these can be abstracted into a single function
 
+var renderDealerHand = function() {
+	//clear existing
+	$('#dealerhand').empty()	
+	//loop over hand
+	for (var i = 0; i < dealerHand.length; i++) {
+		$tagAppended = $('<i></i>');
+		$tagAppended.attr("id", dealerHand[i].id);
+		$('#dealerhand').append($tagAppended);
+	}
+}
 
+//++++++++++++++++++++++++
+//   calculate hand value
+//++++++++++++++++++++++++
 
+//I know these can be abstracted into a single function
+
+var calcDealerHandValue = function() {
+	//make counter for sub total of value
+	var subTotal = 0;
+	//make counter for number of aces in hand
+	var aceTotal = 0;
+	//loop over cards in hand
+	for (var i = 0; i < dealerHand.length; i++) {
+		//if we find an ace,
+		if (dealerHand[i].face === "ace") {
+			//increment ace total
+			aceTotal++
+		};
+		//sum up value
+		subTotal += dealerHand[i].value
+	}
+
+	//if subtotal exceeds 21 and there are aces in the hand
+	while ((subTotal > 21) && (aceTotal > 0)) {
+			subTotal -= 10;
+			aceTotal --;
+		}
+	return subTotal;
+}
+
+var calcPlayerHandValue = function() {
+	//make counter for sub total of value
+	var subTotal = 0;
+	//make counter for number of aces in hand
+	var aceTotal = 0;
+	//loop over cards in hand
+	for (var i = 0; i < playerHand.length; i++) {
+		//if we find an ace,
+		if (playerHand[i].face === "ace") {
+			//increment ace total
+			aceTotal++
+		};
+		//sum up value
+		subTotal += playerHand[i].value
+	}
+
+	//if subtotal exceeds 21 and there are aces in the hand
+	while ((subTotal > 21) && (aceTotal > 0)) {
+			subTotal -= 10;
+			aceTotal --;
+		}
+	return subTotal;
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+//   ace reduce function for soft 17
+//+++++++++++++++++++++++++++++++++++++++
+
+var aceReduce = function(dealerHandValue) {
+	//declare variable to count number of aces
+	var aceTotal = 0;
+	//add up aces in dealer's hand
+	for (var i = 0; i < dealerHand.length; i++) {
+		//if we find an ace,
+		if (dealerHand[i].face === "ace") {
+			//increment ace total
+			aceTotal++
+		};
+	dealerHandValue = dealerHandValue - (10 * aceTotal);
+	}
+}
 
 
 

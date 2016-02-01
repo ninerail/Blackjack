@@ -17,6 +17,12 @@ h2 {
 	text-align: center;
 }
 
+.mess {
+	/*width: 40px;*/
+	margin-bottom: 5px;
+	height: 21px;
+}
+
 #container {
 	width: 80%;
 	margin: 0 auto;
@@ -34,17 +40,17 @@ h2 {
 }
 
 #dealerhand {
-	width: 33%;
+	/*width: 33%;*/
 	/*height: 1em;*/
 	display: block;
 	margin: 0 auto;
-	margin-bottom: 1em;
+	margin-bottom: .5em;
 	padding: 0;
 	height: 77px;
 }
 
 #playerhand {
-	width: 33%;
+	/*width: 33%;*/
 	/*height: 1em;*/
 	display: block;
 	margin: 0 auto;
@@ -123,7 +129,15 @@ span {
 	text-align: center;
 	border-radius: 5px;
 	width: 17em;
-	margin-bottom: .7em;
+	/*margin-bottom: .7em;*/
+}
+
+#gamemessage {
+	display: block;
+	text-align: center;
+	border-radius: 5px;
+	width: 17em;
+	height: 28px;
 }
 
 button {
@@ -225,8 +239,8 @@ i {
   background-position-y: 539px;
 } 
 
-#spadesqueen {
-  background-position-x: -544px;
+#spadesking {
+  background-position-x: -594px;
   background-position-y: 539px;
 } 
 
