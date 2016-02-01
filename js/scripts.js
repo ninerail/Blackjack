@@ -14,7 +14,7 @@ var playerHand = [];
 var dealerHandValue = 0;
 
 //display initial funds
-$('#bank').text("Funds: $1000");
+$('#bank').text("Funds: 1000");
 
 //define bet variable
 var bet = 0;
@@ -26,6 +26,10 @@ $betMessage.append('Your bet: $' + bet);
 
 //declare tag appended
 var $tagAppended
+
+//conditions to disable buttons
+var betYet = false;
+var dealYet = false;
 
 
 //++++++++++++++++++++++++++++++++++++
@@ -94,6 +98,8 @@ var funds = {balance: 1000,
 
 								//display funds balance
 								$('#bank').text("Funds: " + this.balance);
+
+								betYet = true;
 							},
 							//return amount of bet in the case of a win
 							winBet: function() {
@@ -108,6 +114,10 @@ var funds = {balance: 1000,
 
 								//display the new balance
 								$('#bank').text("Funds: " + this.balance);
+
+								//Reset bet yet for next turn	
+								betYet = false;
+								dealYet = false;
 
 								//zero out the bet
 								bet = 0;
@@ -129,6 +139,9 @@ var funds = {balance: 1000,
 								//report the new balance
 								$('#bank').text("Funds: " + this.balance);
 								
+								//Reset bet yet for next turn	
+								betYet = false;
+								dealYet = false;
 								//zero out the bet
 								bet = 0;
 
@@ -141,7 +154,10 @@ var funds = {balance: 1000,
 								//annonce result
 								console.log("Player loses");
 								$('#gamemessage').text("player loses");
-
+								
+								//Reset bet yet for next turn	
+								betYet = false;
+								dealYet = false;
 
 								//zero out the bet 		
 								bet = 0;
@@ -158,6 +174,10 @@ var funds = {balance: 1000,
 
 								//add bet back to balance
 								this.balance = this.balance + bet;
+
+								//Reset bet yet for next turn	
+								betYet = false;
+								dealYet = false;
 
 								//zero out the bet
 								bet = 0;
@@ -297,111 +317,131 @@ shuffle(deck);
 
 var deal = function () {
 
-	//clear hands
-	dealerHand = [];
-	playerHand = [];
+	//if bet yet is false, no deal
+	if (betYet === true) {
 
-	//clear display
-	$('#dealerhand').empty();
-	$('#playerhand').empty(); 
+		//clear hands
+		dealerHand = [];
+		playerHand = [];
 
-	//clear messages
-	$('#dealerhandmessage').empty();
-	$('#playerhandmessage').empty();
+		//clear display
+		$('#dealerhand').empty();
+		$('#playerhand').empty(); 
 
+		//clear messages
+		$('#dealerhandmessage').empty();
+		$('#playerhandmessage').empty();
+		$('#gamemessage').empty();
 
-	//if there are less than 10 cards remaining, shuffle deck
-	if (deck.length < 10) {
-		//announce shuffling
-		console.log("SHUFFLING!")
-		//build a new deck
-		buildDeck();
-		//shuffle
-		shuffle(deck);
-	}
-
-	// Pop a card off the deck. Put in in the dealer's hand. Twice
-	for (var i = 0; i < 2; i++) {
-		var currentCard = deck.pop();
-		dealerHand.push(currentCard);	
-	}
-
-	renderDealerHand();
-
-	//grab the second child of dealer hand and set it to back
-	$('#dealerhand i:nth-child(2)').attr("id","back");
-
-	// //display first card face up
-	// //Get the id of the first card in the dealer's hand
-	// //put <i> tags in dealerhand
-	// $('#dealerhand').html('<i></i>');
-
-	// //give id = dealerHand[0].id to <i> tags
-	// $('#dealerhand i:first-child').attr("id", dealerHand[0].id);
-
-	// //display dealer's second card face down
-	// $('#dealerhand').append('<i id="back"></i>');
-
-	//evaluate hand
-	var dealerHandValue = calcDealerHandValue();
-		// $('#dealerhandmessage').text("dealer shows " + dealerHand[0].value);
-
-	
-	//show dealer's first card
-	console.log("Dealer shows " + dealerHand[0].value)
+		//deal yet is true
+		dealYet = true;
 
 
-	//if dealer hand equals 21, call blackjack function
-	if (dealerHandValue === 21) {
-		console.log("Dealer Blackjack!");
-		dealerWins();
-	} else {
-		//if dealer hand value exceeds 21, call bust function
-		if (dealerHandValue > 21) {
-			console.log("Dealer Bust!");
-			playerWins();
-		} 
-	}
+		//if there are less than 10 cards remaining, shuffle deck
+		if (deck.length < 10) {
+			//announce shuffling
+			console.log("SHUFFLING!")
+			//build a new deck
+			buildDeck();
+			//shuffle
+			shuffle(deck);
+		}
 
-	// Put it in the player's hand. Twice
-	for (var i = 0; i < 2; i++) {
+		// Pop a card off the deck. Put in in the dealer's hand. Twice
+		for (var i = 0; i < 2; i++) {
 			var currentCard = deck.pop();
-			playerHand.push(currentCard);	
-	}
+			dealerHand.push(currentCard);	
+		}
 
-	//render player hand
-	renderPlayerHand();
+		renderDealerHand();
 
-	// //display player's first card
-	// $('#playerhand').append('<i></i>');
-	// $('#playerhand i:first-child').attr("id", playerHand[0].id);
+		//grab the second child of dealer hand and set it to back
+		$('#dealerhand i:nth-child(2)').attr("id","back");
 
-	// //display player's second card
-	// $('#playerhand').append('<i></i>');
- //  $('#playerhand i:nth-child(2)').attr("id", playerHand[1].id);
+		// //display first card face up
+		// //Get the id of the first card in the dealer's hand
+		// //put <i> tags in dealerhand
+		// $('#dealerhand').html('<i></i>');
 
-	//evaluate hand
-	var playerHandValue = calcPlayerHandValue();
-	
-	//display player hand value
-	$('#playerhandmessage').text("player has " + playerHandValue);
+		// //give id = dealerHand[0].id to <i> tags
+		// $('#dealerhand i:first-child').attr("id", dealerHand[0].id);
 
-	//if player hand equals 21, call blackjack function
-	if (playerHandValue === 21) {
-		console.log("Player Blackjack!");
-		playerWinsBlackjack();
-	} else {
-		//if player hand value exceeds 21, call bust function
-		if (playerHandValue > 21) {
-			console.log("Player Bust!");
+		// //display dealer's second card face down
+		// $('#dealerhand').append('<i id="back"></i>');
+
+		//evaluate hand
+		var dealerHandValue = calcDealerHandValue();
+			// $('#dealerhandmessage').text("dealer shows " + dealerHand[0].value);
+
+		
+		//show dealer's first card
+		console.log("Dealer shows " + dealerHand[0].value)
+
+
+		//if dealer hand equals 21, call blackjack function
+		if (dealerHandValue === 21) {
+
+			console.log("Dealer Blackjack!");
+
+			$('#gamemessage').text("dealer blackjace");
+
+			//render the dealer's hand	
+			renderDealerHand();
+
+			//dealer wins
 			dealerWins();
-		} 
-	}
+		} else {
+			//if dealer hand value exceeds 21, call bust function
+			if (dealerHandValue > 21) {
+				console.log("Dealer Bust!");
+				$('#gamemessage').text("dealer busts");
+				playerWins();
+			} 
+		}
 
-	//set onclick for stand and pass player hand value as argument
-	$('#stand').click(function () {
-		stand(playerHandValue);
-	})
+		// Put it in the player's hand. Twice
+		for (var i = 0; i < 2; i++) {
+				var currentCard = deck.pop();
+				playerHand.push(currentCard);	
+		}
+
+		//render player hand
+		renderPlayerHand();
+
+		// //display player's first card
+		// $('#playerhand').append('<i></i>');
+		// $('#playerhand i:first-child').attr("id", playerHand[0].id);
+
+		// //display player's second card
+		// $('#playerhand').append('<i></i>');
+	 //  $('#playerhand i:nth-child(2)').attr("id", playerHand[1].id);
+
+		//evaluate hand
+		var playerHandValue = calcPlayerHandValue();
+		
+		//display player hand value
+		$('#playerhandmessage').text("player has " + playerHandValue);
+
+		//if player hand equals 21, call blackjack function
+		if (playerHandValue === 21) {
+			console.log("Player Blackjack!");
+			playerWinsBlackjack();
+		} else {
+			//if player hand value exceeds 21, call bust function
+			if (playerHandValue > 21) {
+				console.log("Player Bust!");
+				dealerWins();
+			} 
+		}
+
+		//set onclick for stand and pass player hand value as argument
+		$('#stand').click(function () {
+			stand(playerHandValue);
+		})
+	} else {
+		$('#gamemessage').text("you must bet first");
+
+	}
 }
 
 //++++++++++++++++++
@@ -409,51 +449,56 @@ var deal = function () {
 //++++++++++++++++++
 
 var hit = function () {
-	//Pop a card off the deck, 
-	var currentCard = deck.pop();
-	//Put it in the player's hand
-	playerHand.push(currentCard);
 
-	//Add up PHV 
-	var playerHandValue = calcPlayerHandValue();
+	//if betYet = false, send message, don't perform
+	if (betYet === true && dealYet === true) {
 
-	//display and report PHV
-	$('#playerhandmessage').text("player has " + playerHandValue);
+		//Pop a card off the deck, 
+		var currentCard = deck.pop();
+		//Put it in the player's hand
+		playerHand.push(currentCard);
 
-	console.log("Player has " + playerHandValue);
+		//Add up PHV 
+		var playerHandValue = calcPlayerHandValue();
 
-	//render player's hand
-	renderPlayerHand();
+		//display and report PHV
+		$('#playerhandmessage').text("player has " + playerHandValue);
 
-	//display additional card
-	// $tagAppended = $('<i></i>');
-	// $tagAppended.attr("id", playerHand[playerHand.length - 1].id);
-	// $('#playerhand').append($tagAppended);
-  //$('#playerhand i:nth-child(3)').attr("id", playerHand[2].id);
+		console.log("Player has " + playerHandValue);
 
-	//Test for 21
-	if (playerHandValue === 21) {
-		console.log("Player hits 21!");
-		$('#playerhandmessage').text("player has 21!");
-		stand(21);
+		//render player's hand
+		renderPlayerHand();
+
+		//display additional card
+		// $tagAppended = $('<i></i>');
+		// $tagAppended.attr("id", playerHand[playerHand.length - 1].id);
+		// $('#playerhand').append($tagAppended);
+	  //$('#playerhand i:nth-child(3)').attr("id", playerHand[2].id);
+
+		//Test for 21
+		if (playerHandValue === 21) {
+			console.log("Player hits 21!");
+			$('#playerhandmessage').text("player has 21!");
+			stand(21);
+		}
+
+		//Test for bust
+		if (playerHandValue > 21) {
+			console.log("Player busts!");
+			$('#playerhandmessage').text("player busts");
+			dealerWins();
+		}
+		//set onclick for stand and pass player hand value as argument
+		$('#stand').click(function () {
+			stand(playerHandValue);
+		})
+
+		//pointer on hover
+	$('#stand').css( 'cursor', 'pointer' );
+	} else {
+		$('#gamemessage').text("you have not placed a bet");
 	}
-
-	//Test for bust
-	if (playerHandValue > 21) {
-		console.log("Player busts!");
-		$('#playerhandmessage').text("player busts");
-		dealerWins();
-	}
-	//set onclick for stand and pass player hand value as argument
-	$('#stand').click(function () {
-		stand(playerHandValue);
-	})
-
-	//pointer on hover
-$('#stand').css( 'cursor', 'pointer' );
-
 }
-
 //+++++++++++++++++++
 //   Stand function
 //+++++++++++++++++++

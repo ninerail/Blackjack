@@ -4,6 +4,10 @@
 	font-family: sans-serif;
 }
 
+#container {
+	width: 80%;
+}
+
 div {
 	/*border: 1px solid red;*/
 	display: block;
@@ -60,12 +64,12 @@ h2 {
 }
 
 #bank {
-	width: 10%;
+	width: 60px;
 	height: 3em;
 	margin-left: 0;
 	position: absolute;
-	left: 5%;
-	bottom: 0;
+	left: 3em;
+	bottom: 6em;
 }
 
 
@@ -143,10 +147,11 @@ span {
 	height: 6em;
 	margin-left: 10%;
 	text-align: center;
-	margin-bottom: 40px;
+	margin-bottom: 0;
 	/*position: absolute;*/
+/*	bottom: 0;
 	margin: 0 auto;
-}
+*/}
 
 .nav {
 	display: block;
