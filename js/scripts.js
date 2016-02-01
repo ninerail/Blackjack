@@ -36,7 +36,7 @@ var valueArray = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 var suitsArray = ["spades","hearts","diamonds","clubs"];
 
 //set array of set of face
-var faceArray = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+var faceArray = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
 
 //build loop for suit
 for (var suit = 0; suit < suitsArray.length; suit++) {
@@ -54,6 +54,8 @@ for (var suit = 0; suit < suitsArray.length; suit++) {
 			  this.suit = suitsArray[suit];
 			  //set face
 			  this.face = faceArray[face];
+			  //set id
+			  this.id = suitsArray[suit] + faceArray[face];
 			}
 		  //assign object to variable
 		  var card = new Card;
@@ -144,7 +146,7 @@ function shuffle(array) {
 }
 
 //+++++++++++++++++++++++++
-//   set bet phase
+//   set event listeners
 //+++++++++++++++++++++++++
 
 
@@ -212,7 +214,7 @@ $('#hit').click(function () {
 
 
 //++++++++++++++++++
-//   Shuffle Deck and call bet phase
+//   Shuffle Deck 
 //++++++++++++++++++
 
 shuffle(deck);
@@ -233,11 +235,25 @@ var deal = function () {
 		dealerHand.push(currentCard);	
 	}
 
+	//display first card face up
+	//Get the id of the first card in the dealer's hand
+	dealerHand[0].id;
+
+	//put <i> tags in dealerhand
+	$('#dealerhand').html('<i></i>');
+
+	//give id = dealerHand[0].id to <i> tags
+	$('#dealerhand i:first-child').attr("id", dealerHand[0].id);
+
+	//display dealer's second card face down
+	$('#dealerhand').append('<i id="back"></i>');
+
 	//evaluate hand
 	var dealerHandValue = dealerHand[0].value + dealerHand[1].value;
 	
 	//show dealer's first card
 	console.log("Dealer shows " + dealerHand[0].value)
+
 
 	//if dealer hand equals 21, call blackjack function
 	if (dealerHandValue === 21) {
@@ -256,6 +272,14 @@ var deal = function () {
 			var currentCard = deck.pop();
 			playerHand.push(currentCard);	
 	}
+
+	//display player's first card
+	$('#playerhand').append('<i></i>');
+	$('#playerhand i:first-child').attr("id", playerHand[0].id);
+
+	//display player's second card
+	$('#playerhand').append('<i></i>');
+  $('#playerhand i:nth-child(2)').attr("id", playerHand[1].id);
 
 	//evaluate hand
 	var playerHandValue = playerHand[0].value + playerHand[1].value;

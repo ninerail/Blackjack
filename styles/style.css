@@ -121,7 +121,6 @@ span {
 #betmessage {
 	display: block;
 	text-align: center;
-	background-color: green;
 	border-radius: 5px;
 	width: 17em;
 	margin-bottom: .7em;
@@ -143,7 +142,7 @@ i {
     height: 77px;
     display: inline-block;
     background-size: 1286%;
-    margin-right: 0;
+    margin-right: 3px;
 }
 
 #back {
@@ -166,9 +165,254 @@ i {
 	background-position-y: 616px;
 }
 
-
-#HeartsAce {
-	background-position-x: 1px;
-	background-position-y: 484px;
+#spadesace {
+  background-position-x: 0px;
+  background-position-y: 539px;
 }
+
+#spades2 {
+  background-position-x: -49px;
+  background-position-y: 539px;
+}
+
+#spades3 {
+  background-position-x: -99px;
+  background-position-y: 539px;
+}
+
+#spades4 {
+  background-position-x: -148px;
+  background-position-y: 539px;
+}
+
+#spades5 {
+  background-position-x: -198px;
+  background-position-y: 539px;
+}
+
+#spades6 {
+  background-position-x: -247px;
+  background-position-y: 539px;
+}
+
+#spades7 {
+  background-position-x: -297px;
+  background-position-y: 539px;
+}
+
+#spades8 {
+  background-position-x: -347px;
+  background-position-y: 539px;
+}
+
+#spades9 {
+  background-position-x: -395px;
+  background-position-y: 539px;
+} 
+
+#spades10 {
+  background-position-x: -445px;
+  background-position-y: 539px;
+} 
+
+#spadesjack {
+  background-position-x: -494px;
+  background-position-y: 539px;
+} 
+
+#spadesqueen {
+  background-position-x: -544px;
+  background-position-y: 539px;
+} 
+
+#spadesqueen {
+  background-position-x: -544px;
+  background-position-y: 539px;
+} 
+
+#diamondsace {
+	background-position-x: 0px;
+  background-position-y: -77px;
+}
+
+#diamonds2 {
+	background-position-x: -49px;
+  background-position-y: -77px;
+}
+
+#diamonds3 {
+	background-position-x: -99px;
+  background-position-y: -77px;
+}
+
+#diamonds4 {
+	background-position-x: -148px;
+  background-position-y: -77px;
+}
+
+#diamonds5 {
+	background-position-x: -198px;
+  background-position-y: -77px;
+}
+
+#diamonds6 {
+	background-position-x: -247px;
+  background-position-y: -77px;
+}
+
+#diamonds7 {
+	background-position-x: -297px;
+  background-position-y: -77px;
+}
+
+#diamonds8 {
+	background-position-x: -346px;
+  background-position-y: -77px;
+}
+
+#diamonds9 {
+	background-position-x: -395px;
+  background-position-y: -77px;
+}
+
+#diamonds10 {
+	background-position-x: -446px;
+  background-position-y: -77px;
+}
+
+#diamondsjack {
+	background-position-x: -495px;
+  background-position-y: -77px;
+}
+
+#diamondsqueen {
+	background-position-x: -544px;
+  background-position-y: -77px;
+}
+
+#diamondsking {
+	background-position-x: -594px;
+  background-position-y: -77px;
+}
+
+#clubs4 {
+	background-position-x: -148px;
+  background-position-y: -154px;
+}
+
+#clubs5 {
+	background-position-x: -198px;
+  background-position-y: -154px;
+}
+
+#clubs6 {
+	background-position-x: -247px;
+  background-position-y: -154px;
+}
+
+#clubs7 {
+	background-position-x: -297px;
+  background-position-y: -154px;
+}
+
+#clubs8 {
+	background-position-x: -346px;
+  background-position-y: -154px;
+}
+
+#clubs9 {
+	background-position-x: -395px;
+  background-position-y: -154px;
+}
+
+#clubs10 {
+	background-position-x: -445px;
+  background-position-y: -154px;
+}
+
+#clubsjack {
+	background-position-x: -495px;
+  background-position-y: -154px;
+}
+
+#clubsqueen {
+	background-position-x: -544px;
+  background-position-y: -154px;
+}
+
+#clubsking {
+	background-position-x: -593px;
+  background-position-y: -154px;
+}
+
+#heartsace {
+	background-position-x: 0px;
+  background-position-y: 0px;
+}
+
+#hearts2 {
+	background-position-x: -50px;
+  background-position-y: 0px;
+}
+
+#hearts3 {
+	background-position-x: -100px;
+  background-position-y: 0px;
+}
+
+#hearts4 {
+	background-position-x: -148px;
+  background-position-y: 0px;
+}
+
+#hearts4 {
+	background-position-x: -148px;
+  background-position-y: 0px;
+}
+
+#hearts5 {
+	background-position-x: -198px;
+  background-position-y: 0px;
+}
+
+#hearts6 {
+	background-position-x: -248px;
+  background-position-y: 0px;
+}
+
+#hearts7 {
+	background-position-x: -297px;
+  background-position-y: 0px;
+}
+
+#hearts8 {
+	background-position-x: -346px;
+  background-position-y: 0px;
+}
+
+#hearts9 {
+	background-position-x: -396px;
+  background-position-y: 0px;
+}
+
+#hearts10 {
+	background-position-x: -445px;
+  background-position-y: 0px;
+}
+
+#heartsjack {
+	background-position-x: -495px;
+  background-position-y: 0px;
+}
+
+#heartsqueen {
+	background-position-x: -544px;
+  background-position-y: 0px;
+}
+
+#heartsking {
+	background-position-x: -594px;
+  background-position-y: 0px;
+}
+
 
