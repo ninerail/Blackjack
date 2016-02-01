@@ -30,6 +30,7 @@ var $tagAppended
 //conditions to disable buttons
 var betYet = false;
 var dealYet = false;
+var funds = true;
 
 
 //++++++++++++++++++++++++++++++++++++
@@ -91,10 +92,16 @@ var buildDeck = function () {
 //start funds at $1000
 var funds = {balance: 1000,
 							//reduce funds by amount of bet 
-							betReduce: function() {
+							betReduce: function(amount) {
 
 								//reduce balance by bet amount
-								this.balance = this.balance - bet;
+								this.balance = this.balance - amount;
+
+								//if this balance is zero, alert
+								if (this.balance <= 0) {
+								$('#gamemessage').text("you are broke");
+								funds = false
+								};
 
 								//display funds balance
 								$('#bank').text("Funds: " + this.balance);
@@ -169,7 +176,7 @@ var funds = {balance: 1000,
 
 								//announce result
 								console.log("It's a push!")
-								$('#gamemessage').text("player wins!");
+								$('#gamemessage').text("its a push");
 
 
 								//add bet back to balance
@@ -318,7 +325,11 @@ shuffle(deck);
 var deal = function () {
 
 	//if bet yet is false, no deal
-	if (betYet === true) {
+	if (betYet === true && dealYet === false) {
+
+		//We have dealt
+		dealYet = true;
+
 
 		//clear hands
 		dealerHand = [];
