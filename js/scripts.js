@@ -24,7 +24,11 @@ var bet = 0;
 $betMessage = $('#betmessage');
 $betMessage.append('Your bet: $' + bet);
 
+//Test variable
+var blowhole = 15;
 
+//declare tag appended
+var $tagAppended
 //++++++++++++++++++++++++++++++++++++
 //   Construct beginning deck array
 //++++++++++++++++++++++++++++++++++++
@@ -237,8 +241,6 @@ var deal = function () {
 
 	//display first card face up
 	//Get the id of the first card in the dealer's hand
-	dealerHand[0].id;
-
 	//put <i> tags in dealerhand
 	$('#dealerhand').html('<i></i>');
 
@@ -321,6 +323,15 @@ var hit = function () {
 	}
 	console.log("Player has " + playerHandValue);
 
+
+	
+
+	//display additional card
+	$tagAppended = $('<i></i>');
+	$tagAppended.attr("id", playerHand[playerHand.length - 1].id);
+	$('#playerhand').append($tagAppended);
+  //$('#playerhand i:nth-child(3)').attr("id", playerHand[2].id);
+
 	//Test for 21
 	if (playerHandValue === 21) {
 		console.log("Player hits 21!");
@@ -351,18 +362,37 @@ var stand = function (playerHandValue) {
 		dealerHandValue += dealerHand[i].value;
 	}
 
+	//get rid of back
+	$('#dealerhand i:nth-child(2)').remove();
+
+	//show face down card
+	$tagAppended = $('<i></i>');
+	$tagAppended.attr("id", dealerHand[dealerHand.length - 1].id);
+	$('#dealerhand').append($tagAppended);
+
 	//Report dealer hand value
 	console.log("Dealer has: " + dealerHandValue);
 
 	//if less than 17, hit and repeat until 17 or more
 	while (dealerHandValue < 17) {
-		console.log("Dealer takes card");
+		
 		//pop a card off the stack
 		var currentCard = deck.pop();
-		//Put it in the player's hand
+
+		//Put it in the dealer's hand
 		dealerHand.push(currentCard);
+
+		//display the new card
+		$tagAppended = $('<i></i>');
+		$tagAppended.attr("id", dealerHand[dealerHand.length - 1].id);
+		$('#dealerhand').append($tagAppended);
+
+		//add onto dealer hand value
 		dealerHandValue += currentCard.value
+
+		//report new dealer hand value
 		console.log("Dealer has " + dealerHandValue)
+
 	}
 
 	if (dealerHandValue > 21) {
